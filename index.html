@@ -3,12 +3,359 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jetbrain</title>
+  <title>jetbrain — HELLO WORLD</title>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Share Tech Mono', monospace;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 8s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .scene {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    /* Orbiting rings */
+    .rings {
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+    }
+
+    .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid transparent;
+    }
+
+    .ring-1 {
+      border-color: rgba(0, 255, 136, 0.4);
+      animation: orbit1 4s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    }
+    .ring-2 {
+      inset: 20px;
+      border-color: rgba(0, 180, 255, 0.3);
+      animation: orbit1 6s linear infinite reverse;
+    }
+    .ring-3 {
+      inset: 40px;
+      border-color: rgba(255, 0, 200, 0.3);
+      animation: orbit1 9s linear infinite;
+    }
+
+    @keyframes orbit1 {
+      from { transform: rotate(0deg) scaleX(1.8); }
+      to   { transform: rotate(360deg) scaleX(1.8); }
+    }
+
+    .badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: #00ff88;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 0.7; }
+      96% { opacity: 0.1; }
+      97% { opacity: 0.7; }
+      98% { opacity: 0.2; }
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .title .hello {
+      display: block;
+      background: linear-gradient(135deg, #00ff88, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.5));
+      animation: pulse 2s ease-in-out infinite alternate;
+    }
+
+    .title .world {
+      display: block;
+      background: linear-gradient(135deg, #ff00cc, #ff6600);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(255, 0, 200, 0.5));
+      animation: pulse 2s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulse {
+      from { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.4)); }
+      to   { filter: drop-shadow(0 0 60px rgba(0, 255, 136, 0.9)); }
+    }
+
+    /* Glitch effect */
+    .title::before,
+    .title::after {
+      content: 'HELLO\AWORLD';
+      white-space: pre;
+      position: absolute;
+      inset: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: inherit;
+      line-height: 0.95;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .title::before {
+      color: #ff00cc;
+      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+      animation: glitch1 4s infinite;
+    }
+
+    .title::after {
+      color: #00ccff;
+      clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+      animation: glitch2 4s infinite;
+    }
+
+    @keyframes glitch1 {
+      0%, 90%, 100% { transform: translate(0); opacity: 0; }
+      92% { transform: translate(-3px, 1px); opacity: 0.4; }
+      94% { transform: translate(3px, -1px); opacity: 0.4; }
+      96% { transform: translate(0); opacity: 0; }
+    }
+
+    @keyframes glitch2 {
+      0%, 85%, 100% { transform: translate(0); opacity: 0; }
+      87% { transform: translate(3px, 2px); opacity: 0.4; }
+      89% { transform: translate(-3px, -2px); opacity: 0.4; }
+      91% { transform: translate(0); opacity: 0; }
+    }
+
+    .subtitle {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Power meter */
+    .power-bar {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .power-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #00ff88;
+      opacity: 0.7;
+    }
+
+    .bar-track {
+      width: 120px;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #00ff88, #00ccff, #ff00cc);
+      animation: powerUp 2s ease-out forwards, barPulse 1.5s ease-in-out 2s infinite alternate;
+    }
+
+    @keyframes powerUp {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    @keyframes barPulse {
+      from { opacity: 0.6; }
+      to   { opacity: 1; box-shadow: 0 0 8px #00ff88; }
+    }
+
+    .power-value {
+      font-size: 0.6rem;
+      color: #00ff88;
+      animation: countUp 2s steps(20) forwards;
+    }
+
+    @keyframes countUp {
+      from { --v: 0; }
+      to   { --v: 9000; }
+    }
+
+    /* Corner decorations */
+    .corner {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      opacity: 0.4;
+    }
+
+    .corner-tl { top: 16px; left: 16px; border-top: 1px solid #00ff88; border-left: 1px solid #00ff88; }
+    .corner-tr { top: 16px; right: 16px; border-top: 1px solid #00ff88; border-right: 1px solid #00ff88; }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom: 1px solid #00ff88; border-left: 1px solid #00ff88; }
+    .corner-br { bottom: 16px; right: 16px; border-bottom: 1px solid #00ff88; border-right: 1px solid #00ff88; }
+
+    .status-line {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: rgba(0,255,136,0.4);
+      z-index: 2;
+      animation: blink 2s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <h1>Hello world</h1>
+
+  <!-- Corner brackets -->
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="scene">
+    <div class="rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+
+    <div class="badge">// system initialized //</div>
+
+    <h1 class="title">
+      <span class="hello">Hello</span>
+      <span class="world">World</span>
+    </h1>
+
+    <p class="subtitle">jetbrain &nbsp;·&nbsp; overpowered edition</p>
+
+    <div class="power-bar">
+      <span class="power-label">PWR</span>
+      <div class="bar-track"><div class="bar-fill"></div></div>
+      <span class="power-label" id="pwr-val">9000+</span>
+    </div>
+  </div>
+
+  <div class="status-line">▮ READY</div>
+
+  <script>
+    // Generate particles
+    const container = document.getElementById('particles');
+    const colors = ['#00ff88', '#00ccff', '#ff00cc', '#ff6600', '#ffffff'];
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.cssText = `
+        left: ${Math.random() * 100}%;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        animation-duration: ${4 + Math.random() * 8}s;
+        animation-delay: ${Math.random() * 8}s;
+        width: ${Math.random() > 0.8 ? 3 : 2}px;
+        height: ${Math.random() > 0.8 ? 3 : 2}px;
+        opacity: ${0.4 + Math.random() * 0.6};
+      `;
+      container.appendChild(p);
+    }
+  </script>
 </body>
 </html>
